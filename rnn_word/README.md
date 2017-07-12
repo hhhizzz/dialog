@@ -9,5 +9,5 @@ i need to know information for flights leaving dallas on tuesday evening and ret
 ```
 返回值为：
 ```shell
-i need to know information for flights leaving dallas on tuesday evening and returning to atlanta
+[['O'], ['O'], ['O'], ['O'], ['O'], ['O'], ['O'], ['O'], ['B-fromloc.city_name'], ['O'], ['B-depart_date.day_name'], ['B-depart_time.period_of_day'], ['O'], ['O'], ['O'], ['B-fromloc.city_name']]
 ```
