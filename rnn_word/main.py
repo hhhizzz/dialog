@@ -45,7 +45,7 @@ words_train = [list(map(lambda x: idx2w[x], w)) for w in train_x]
 groundtruth_train = [list(map(lambda x: idx2la[x], y)) for y in train_label]
 
 ### Training
-n_epochs = 100
+n_epochs = 1
 
 train_f_scores = []
 val_f_scores = []
@@ -53,7 +53,7 @@ best_val_f1 = 0
 
 for i in range(n_epochs):
     print("Epoch {}".format(i))
-
+    model.load_weights("best_model_weights.h5")
     print("Training =>")
     train_pred_label = []
     avgLoss = 0
@@ -63,9 +63,9 @@ for i in range(n_epochs):
         label = np.eye(n_classes)[label][np.newaxis, :]
         sent = sent[np.newaxis, :]
 
-        if sent.shape[1] > 1:  # some bug in keras
-            loss = model.train_on_batch(sent, label)
-            avgLoss += loss
+        # if sent.shape[1] > 1:  # some bug in keras
+        #     loss = model.train_on_batch(sent, label)
+        #     avgLoss += loss
 
         pred = model.predict_on_batch(sent)
         pred = np.argmax(pred, -1)[0]
@@ -107,9 +107,9 @@ for i in range(n_epochs):
     print(
         'Loss = {}, Precision = {}, Recall = {}, F1 = {}'.format(avgLoss, con_dict['r'], con_dict['p'], con_dict['f1']))
 
-    if con_dict['f1'] > best_val_f1:
-        best_val_f1 = con_dict['f1']
-        open('model_architecture.json', 'w').write(model.to_json())
-        model.save_weights('best_model_weights.h5', overwrite=True)
-        print("Best validation F1 score = {}".format(best_val_f1))
+    # if con_dict['f1'] > best_val_f1:
+    #     best_val_f1 = con_dict['f1']
+    #     open('model_architecture.json', 'w').write(model.to_json())
+    #     model.save_weights('best_model_weights.h5', overwrite=True)
+    #     print("Best validation F1 score = {}".format(best_val_f1))
     print()
